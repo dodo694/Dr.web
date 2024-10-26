@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prescription Template</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .prescription {
+            width: 800px;
+            padding: 20px;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .header .doctor-info {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .header .stethoscope-icon {
+            width: 50px;
+            height: 50px;
+        }
+        .header .patient-info {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .header .patient-info label {
+            font-weight: bold;
+        }
+        .header .patient-info input {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .rx-symbol input {
+            font-size: 48px;
+            width: 500px;
+            height: 250px;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 2px solid black;
+            border-radius: 5px;
+            color : black ;
+        }
+        .contact-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #777;
+        }
+        #printButton {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #00aaff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="prescription">
+        <div class="header">
+            <div class="doctor-info">
+                Dr. Danial Essam
+            </div>
+            <div class="patient-info">
+                <div>
+                    <label for="patient-name">Name:</label>
+                    <input type="text" id="patient-name" name="patient-name">
+                </div>
+                <div>
+                    <label for="age">Age:</label>
+                    <input type="number" id="age" name="age">
+                </div>
+                <div>
+                    <label for="date">Date:</label>
+                    <input type="date" id="date" name="date">
+                </div>
+            </div>
+        </div>
+        <div class="rx-symbol">
+             <p contenteditable="true">Type here...</p>
+        </div>
+        <div class="contact-info">
+            <div>Phone Number 1: 01550097745</div>
+            <div>Adress:Elkawther</div>
+        </div>
+        <button id="printButton">Print</button>
+    </div>
+
+    <script>
+        document.getElementById('printButton').addEventListener('click', function() {
+            window.print();
+        });
+    </script>
+</body>
+</html>

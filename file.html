@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>files</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1c1c1c;
+            color: white;
+            padding: 0px;
+            margin: 0px;
+        }
+        div.maincontent{
+            height: 745px;
+            background-image: url('photo/hospital.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        div.maincontentdr{
+            background-image: url(photo/hospital.jpg);
+        }
+        div.navbar{
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background-color: black;
+            color: white;
+            margin 18px;
+        }
+        div.navbar a{
+            padding: 10px;
+            border-radius: 20px;
+            color: white ;
+            text-decoration: none;
+        }
+        input, select {
+            padding: 8px;
+            margin: 10px;
+            border: none;
+            border-radius: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid white;
+        }
+        th, td {
+            padding: 12px;
+            text-align: center;
+        }
+        .btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn-add {
+            background-color: #28a745;
+            color: white;
+        }
+        .btn-delete {
+            background-color: #dc3545;
+            color: white;
+        }
+        .btn-edit {
+            background-color: #ffc107;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="maincontent maincontentdr">
+        <div class="navbar">
+            <img src="photo/dr.logo.png" width="60px">
+            <a href="index.html">Homepage</a>
+            <a href="file.html">files</a>
+            <a href="prescriptions.html">Doctor's prescriptions</a>
+        </div>
+    </div>
+<h2>Files</h2>
+
+<form id="crudForm">
+    <input type="text" id="name" placeholder="Enter Name" required>
+    <input type="number" id="age" placeholder="Enter Age" required>
+    <input type="text" id="phone" placeholder="Enter Phone Number" required>
+    <select id="gender" required>
+        <option value="" disabled selected>Select Gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+    </select>
+    <button type="button" class="btn btn-add" onclick="addData()">Add Data</button>
+</form>
+
+<table id="crudTable">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Phone Number</th>
+            <th>Gender</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script>
+    let data = JSON.parse(localStorage.getItem("crudData")) || [];
+
+    function updateTable() {
+        const tableBody = document.querySelector("#crudTable tbody");
+        tableBody.innerHTML = "";
+        
+        
+
+        data.forEach((item, index) => {
+
+            const row = document.createElement("tr");
+
+            row.innerHTML = `
+                <td>${item.name}</td>
+                <td>${item.age}</td>
+                <td>${item.phone}</td>
+                <td>${item.gender}</td>
+                <td>
+                    <button class="btn btn-edit" onclick="editData(${index})">Edit</button>
+                    <button class="btn btn-delete" onclick="deleteData(${index})">Delete</button>
+                </td>
+            `;
+
+            tableBody.appendChild(row);
+        });
+
+        localStorage.setItem("crudData", JSON.stringify(data));
+    }
+
+    function addData() {
+        const name = document.getElementById("name").value;
+        const age = document.getElementById("age").value;
+        const phone = document.getElementById("phone").value;
+        const gender = document.getElementById("gender").value;
+
+        if (name && age && phone && gender) {
+            data.push({ name, age, phone, gender });
+            updateTable();
+            document.getElementById("crudForm").reset();
+        } else {
+            alert("Please fill all fields.");
+        }
+    }
+
+    function editData(index) {
+        const item = data[index];
+        document.getElementById("name").value = item.name;
+        document.getElementById("age").value = item.age;
+        document.getElementById("phone").value = item.phone;
+        document.getElementById("gender").value = item.gender;
+
+        data.splice(index, 1); // Remove the item being edited
+    }
+
+    function deleteData(index) {
+        if (confirm("Are you sure you want to delete this entry?")) {
+            data.splice(index, 1);
+            updateTable();
+        }
+    }
+
+    // Load data when the page is loaded
+    window.onload = updateTable;
+</script>
+
+</body>
+</html>
